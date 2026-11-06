@@ -1,37 +1,663 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Мой сайт</title>
+  <title>קפה ולב | Caffe & Heart — תפריט והזמנות</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --primary: #2b1e16;
+      --accent: #b07d52;
+      --accent-hover: #96673f;
+      --bg: #fbf8f5;
+      --card-bg: #ffffff;
+      --text: #2d2421;
+      --text-muted: #736b66;
+      --border: #ede6df;
+      --badge: #2b1e16;
+      --font-body: 'Assistant', sans-serif;
+      --font-title: 'Playfair Display', serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: system-ui, -apple-system, sans-serif;
+      font-family: var(--font-body);
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: 90px;
+    }
+
+    /* Навигация */
+    header {
+      position: sticky;
+      top: 0;
+      background: rgba(251, 248, 245, 0.95);
+      backdrop-filter: blur(10px);
+      z-index: 100;
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1rem 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      color: var(--primary);
+    }
+    .logo h1 {
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+    .logo span {
+      font-family: var(--font-title);
+      font-style: italic;
+      color: var(--accent);
+      font-size: 1rem;
+    }
+
+    .cart-btn {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      padding: 0.6rem 1.25rem;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s;
+    }
+    .cart-btn:hover { background: var(--accent); }
+    .cart-badge {
+      background: var(--accent);
+      color: #fff;
+      border-radius: 50%;
+      padding: 0.15rem 0.55rem;
+      font-size: 0.8rem;
+    }
+
+    /* Главный баннер */
+    .hero {
+      max-width: 1100px;
+      margin: 2rem auto;
+      padding: 0 1.25rem;
+      text-align: center;
+    }
+    .hero h2 {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 0.75rem;
+      font-weight: 800;
+    }
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 1.5rem;
+    }
+    .shop-meta {
+      display: inline-flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 0.75rem 1.5rem;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    }
+    .meta-item { display: flex; align-items: center; gap: 0.4rem; color: var(--text); }
+    .meta-item span.status { color: #16a34a; font-weight: 700; }
+
+    /* Фильтры категорий */
+    .categories {
+      max-width: 1100px;
+      margin: 2rem auto 1.5rem;
+      padding: 0 1.25rem;
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .categories::-webkit-scrollbar { display: none; }
+    .cat-pill {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 25px;
+      padding: 0.5rem 1.25rem;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+    .cat-pill.active, .cat-pill:hover {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    /* Сетка товаров */
+    .menu-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.06);
+    }
+    .card-img {
+      height: 160px;
+      background: #f1ede8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.5rem;
+      position: relative;
+    }
+    .card-content {
+      padding: 1.25rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.35rem;
+    }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      flex-grow: 1;
+    }
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+      padding-top: 0.75rem;
+      border-top: 1px dashed var(--border);
+    }
+    .price {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+    .add-btn {
+      background: var(--bg);
+      color: var(--primary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.45rem 0.9rem;
+      font-family: var(--font-body);
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .add-btn:hover {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    /* Модальное окно корзины */
+    .drawer-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(4px);
+      z-index: 200;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .drawer-overlay.open { opacity: 1; pointer-events: auto; }
+    .cart-drawer {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      max-width: 440px;
+      background: #fff;
+      z-index: 201;
+      transform: translateX(-100%);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      padding: 1.5rem;
+    }
+    .drawer-overlay.open .cart-drawer { transform: translateX(0); }
+    .drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+    .cart-items {
+      flex-grow: 1;
+      overflow-y: auto;
+      margin: 1rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--bg);
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+    }
+    .qty-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .qty-btn {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: #fff;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    /* Форма оформления */
+    .checkout-form {
+      border-top: 1px solid var(--border);
+      padding-top: 1rem;
+    }
+    .form-group { margin-bottom: 0.75rem; }
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+    .form-input {
+      width: 100%;
+      padding: 0.6rem 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+    }
+    .order-type-switch {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+    .type-btn {
+      flex: 1;
+      padding: 0.5rem;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .type-btn.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+    .submit-order {
+      width: 100%;
+      background: #25d366;
+      color: #fff;
+      border: none;
+      padding: 0.9rem;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      font-family: var(--font-body);
+      cursor: pointer;
+      margin-top: 0.5rem;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
-      margin: 0;
-      background: #0f172a;
-      color: #f8fafc;
+      gap: 0.5rem;
     }
-    .card {
-      text-align: center;
-      padding: 2.5rem;
-      border: 1px solid #334155;
-      border-radius: 16px;
-      background: #1e293b;
-      max-width: 420px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    .submit-order:hover { background: #1eb954; }
+
+    /* Плавающая кнопка для мобильных */
+    .floating-bar {
+      display: none;
+      position: fixed;
+      bottom: 1rem;
+      left: 1.25rem;
+      right: 1.25rem;
+      background: var(--primary);
+      color: #fff;
+      padding: 0.9rem 1.25rem;
+      border-radius: 30px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+      z-index: 99;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
     }
-    h1 { margin-top: 0; color: #38bdf8; }
-    p { color: #94a3b8; line-height: 1.5; }
+    @media (max-width: 768px) {
+      .floating-bar { display: flex; }
+      .hero h2 { font-size: 1.9rem; }
+    }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h1>Сайт запущен!</h1>
-    <p>Репозиторий на GitHub подключен. Следующий шаг — публикация через Vercel.</p>
+
+  <!-- Навигация -->
+  <header>
+    <div class="nav-container">
+      <a href="#" class="logo">
+        <h1>קפה ולב</h1>
+        <span>Caffe & Heart</span>
+      </a>
+      <button class="cart-btn" onclick="toggleCart()">
+        🛒 סל הזמנות
+        <span class="cart-badge" id="cart-count">0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Инфо-блок -->
+  <main>
+    <section class="hero">
+      <h2>קפה משובח, מאפים טריים ואירוח מהלב</h2>
+      <p>קפה שכונתי אינטימי בראשון לציון. קפה מוקפד, כריכים ומאפים באפייה יומיומית.</p>
+      <div class="shop-meta">
+        <div class="meta-item">📍 רחוב הורוביץ 36, ראשון לציון</div>
+        <div class="meta-item">⏰ א'-ה' 08:00–19:00 | ו' 08:00–14:00</div>
+        <div class="meta-item"><span class="status">● פתוח להזמנות</span></div>
+      </div>
+    </section>
+
+    <!-- Фильтры категорий -->
+    <div class="categories">
+      <button class="cat-pill active" onclick="filterCat('all')">הכל</button>
+      <button class="cat-pill" onclick="filterCat('coffee')">☕ קפה ושתייה</button>
+      <button class="cat-pill" onclick="filterCat('bakery')">🥐 מאפים ומתוקים</button>
+      <button class="cat-pill" onclick="filterCat('sandwiches')">🥪 כריכים וטוסטים</button>
+    </div>
+
+    <!-- Список меню -->
+    <div class="menu-grid" id="menu-container"></div>
+  </main>
+
+  <!-- Мобильная плавающая плашка корзины -->
+  <div class="floating-bar" id="floating-cart" onclick="toggleCart()" style="display: none;">
+    <div>
+      <strong id="float-count">0 פריטים</strong> | <span id="float-total">0 ₪</span>
+    </div>
+    <span>לצפייה בהזמנה ←</span>
   </div>
+
+  <!-- Корзина (Drawer) -->
+  <div class="drawer-overlay" id="cart-overlay" onclick="handleOverlayClick(event)">
+    <div class="cart-drawer">
+      <div class="drawer-header">
+        <h3>ההזמנה שלך</h3>
+        <button class="close-btn" onclick="toggleCart()">✕</button>
+      </div>
+
+      <div class="cart-items" id="cart-items-list">
+        <p style="text-align: center; color: var(--text-muted); margin-top: 2rem;">הסל עדיין ריק. הוסיפו משהו טעים מהתפריט :)</p>
+      </div>
+
+      <div class="checkout-form" id="checkout-block" style="display: none;">
+        <div class="order-type-switch">
+          <button type="button" class="type-btn active" id="btn-pickup" onclick="setOrderType('איסוף עצמי')">איסוף עצמי מהמקום</button>
+          <button type="button" class="type-btn" id="btn-delivery" onclick="setOrderType('משלוח')">משלוח</button>
+        </div>
+
+        <div class="form-group">
+          <label>שם מלא</label>
+          <input type="text" class="form-input" id="cust-name" placeholder="שם ומשפחה" required>
+        </div>
+
+        <div class="form-group">
+          <label>טלפון</label>
+          <input type="tel" class="form-input" id="cust-phone" placeholder="050-0000000" required>
+        </div>
+
+        <div class="form-group" id="address-field" style="display: none;">
+          <label>כתובת מדויקת למשלוח</label>
+          <input type="text" class="form-input" id="cust-address" placeholder="רחוב, מספר בית, דירה">
+        </div>
+
+        <div class="form-group">
+          <label>הערות להזמנה (סוג חלב, סוכר וכו')</label>
+          <input type="text" class="form-input" id="cust-notes" placeholder="למשל: שיבולת שועל, בלי בצל">
+        </div>
+
+        <div style="display: flex; justify-content: space-between; margin: 1rem 0; font-size: 1.2rem; font-weight: 800;">
+          <span>סה״כ לתשלום:</span>
+          <span id="final-total">0 ₪</span>
+        </div>
+
+        <!-- Номер WhatsApp для приема заказов (замените на реальный номер кофейни) -->
+        <button class="submit-order" onclick="submitToWhatsApp()">
+          שליחת הזמנה ב-WhatsApp 💬
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Меню заведения קפה ולב
+    const menuItems = [
+      { id: 1, cat: 'coffee', name: 'קפוצ׳ינו / הפוך קטן', desc: 'אספרסו כפול עם חלב מוקצף (אפשרות לשיבולת שועל / סויה)', price: 14, icon: '☕' },
+      { id: 2, cat: 'coffee', name: 'קפוצ׳ינו / הפוך גדול', desc: 'קפה קטיפתי ועשיר בכוס גדולה', price: 16, icon: '☕' },
+      { id: 3, cat: 'coffee', name: 'אמריקנו', desc: 'מנת אספרסו עם מים חמים או קרח', price: 13, icon: '🧊' },
+      { id: 4, cat: 'coffee', name: 'קולד ברו (חליטה קרה)', desc: 'מיצוי קפה קר איטי במשך 18 שעות, עדין ומעורר', price: 18, icon: '🥃' },
+      { id: 5, cat: 'coffee', name: 'מאצ׳ה לאטה', desc: 'אבקת מאצ׳ה יפנית טהורה עם חלב חם או מוקצף קר', price: 19, icon: '🍵' },
+      { id: 6, cat: 'bakery', name: 'קרואסון חמאה שקדים', desc: 'קרואסון פריך ממולא קרם שקדים עשיר ושבבים קלויים', price: 21, icon: '🥐' },
+      { id: 7, cat: 'bakery', name: 'עוגת בבקה שוקולד', desc: 'שמרים רכים במילוי שוקולד מובחר', price: 18, icon: '🍫' },
+      { id: 8, cat: 'bakery', name: 'עוגת גבינה בסקית', desc: 'נימוחה ואפויה בטמפרטורה גבוהה עם מעטה שחום', price: 28, icon: '🍰' },
+      { id: 9, cat: 'sandwiches', name: 'קרואסון סלמון מעושן', desc: 'סלמון נורווגי, גבינת שמנת, צלפים, מלפפון ושמיר', price: 34, icon: '🥪' },
+      { id: 10, cat: 'sandwiches', name: 'טוסט גאודה ופסטו', desc: 'לחם מחמצת כפרי, גאודה הולנדית, עגבניה מיובשת ופסטו בזיליקום', price: 32, icon: '🧀' },
+      { id: 11, cat: 'sandwiches', name: 'כריך אבוקדו וביצה', desc: 'מחית אבוקדו מתובלת, ביצה רכה, צנונית ונבטים', price: 31, icon: '🥑' }
+    ];
+
+    let cart = {};
+    let orderType = 'איסוף עצמי';
+
+    // Рендер каталога
+    function renderMenu(items) {
+      const container = document.getElementById('menu-container');
+      container.innerHTML = items.map(item => `
+        <div class="card">
+          <div class="card-img">${item.icon}</div>
+          <div class="card-content">
+            <h3 class="card-title">${item.name}</h3>
+            <p class="card-desc">${item.desc}</p>
+            <div class="card-footer">
+              <span class="price">${item.price} ₪</span>
+              <button class="add-btn" onclick="addToCart(${item.id})">+ הוספה לסל</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Фильтрация
+    function filterCat(cat) {
+      document.querySelectorAll('.cat-pill').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+      if (cat === 'all') {
+        renderMenu(menuItems);
+      } else {
+        renderMenu(menuItems.filter(i => i.cat === cat));
+      }
+    }
+
+    // Управление корзиной
+    function addToCart(id) {
+      cart[id] = (cart[id] || 0) + 1;
+      updateCartUI();
+    }
+
+    function changeQty(id, delta) {
+      if (!cart[id]) return;
+      cart[id] += delta;
+      if (cart[id] <= 0) delete cart[id];
+      updateCartUI();
+    }
+
+    function updateCartUI() {
+      const count = Object.values(cart).reduce((a, b) => a + b, 0);
+      document.getElementById('cart-count').innerText = count;
+
+      // Мобильная плашка
+      const floatingBar = document.getElementById('floating-cart');
+      if (count > 0 && window.innerWidth <= 768) {
+        floatingBar.style.display = 'flex';
+      } else {
+        floatingBar.style.display = 'none';
+      }
+
+      // Генерация списка позиций
+      const list = document.getElementById('cart-items-list');
+      const checkoutBlock = document.getElementById('checkout-block');
+
+      if (count === 0) {
+        list.innerHTML = '<p style="text-align: center; color: var(--text-muted); margin-top: 2rem;">הסל עדיין ריק. הוסיפו משהו טעים מהתפריט :)</p>';
+        checkoutBlock.style.display = 'none';
+        return;
+      }
+
+      checkoutBlock.style.display = 'block';
+      let total = 0;
+      let html = '';
+
+      for (let id in cart) {
+        const item = menuItems.find(i => i.id == id);
+        const itemTotal = item.price * cart[id];
+        total += itemTotal;
+
+        html += `
+          <div class="cart-item">
+            <div>
+              <div style="font-weight: 700;">${item.name}</div>
+              <div style="color: var(--text-muted); font-size: 0.85rem;">${item.price} ₪ × ${cart[id]} = ${itemTotal} ₪</div>
+            </div>
+            <div class="qty-controls">
+              <button class="qty-btn" onclick="changeQty(${id}, -1)">-</button>
+              <span style="font-weight: 700;">${cart[id]}</span>
+              <button class="qty-btn" onclick="changeQty(${id}, 1)">+</button>
+            </div>
+          </div>
+        `;
+      }
+
+      list.innerHTML = html;
+      document.getElementById('final-total').innerText = `${total} ₪`;
+      document.getElementById('float-count').innerText = `${count} פריטים`;
+      document.getElementById('float-total').innerText = `${total} ₪`;
+    }
+
+    // Переключение типа заказа
+    function setOrderType(type) {
+      orderType = type;
+      document.getElementById('btn-pickup').classList.toggle('active', type === 'איסוף עצמי');
+      document.getElementById('btn-delivery').classList.toggle('active', type === 'משלוח');
+      document.getElementById('address-field').style.display = (type === 'משלוח') ? 'block' : 'none';
+    }
+
+    // Открытие/закрытие панели
+    function toggleCart() {
+      document.getElementById('cart-overlay').classList.toggle('open');
+    }
+    function handleOverlayClick(e) {
+      if (e.target.id === 'cart-overlay') toggleCart();
+    }
+
+    // Оформление в WhatsApp
+    function submitToWhatsApp() {
+      const name = document.getElementById('cust-name').value.trim();
+      const phone = document.getElementById('cust-phone').value.trim();
+      const address = document.getElementById('cust-address').value.trim();
+      const notes = document.getElementById('cust-notes').value.trim();
+
+      if (!name || !phone) {
+        alert('נא למלא שם ומספר טלפון ליצירת קשר');
+        return;
+      }
+      if (orderType === 'משלוח' && !address) {
+        alert('נא להזין כתובת מלאה למשלוח');
+        return;
+      }
+
+      let text = `☕ *הזמנה חדשה - קפה ולב*\n`;
+      text += `👤 *שם:* ${name}\n`;
+      text += `📞 *טלפון:* ${phone}\n`;
+      text += `📦 *סוג הזמנה:* ${orderType}\n`;
+      if (orderType === 'משלוח') text += `📍 *כתובת:* ${address}\n`;
+      if (notes) text += `📝 *הערות:* ${notes}\n`;
+      text += `\n*פירוט הפריטים:*\n`;
+
+      let total = 0;
+      for (let id in cart) {
+        const item = menuItems.find(i => i.id == id);
+        text += `• ${item.name} × ${cart[id]} (${item.price * cart[id]} ₪)\n`;
+        total += item.price * cart[id];
+      }
+      text += `\n💰 *סה״כ לתשלום: ${total} ₪*`;
+
+      // Замените этот номер на реальный WhatsApp кофейни (в международном формате, например 972501234567)
+      const phoneTo = "972500000000"; 
+      const url = `https://wa.me/${phoneTo}?text=${encodeURIComponent(text)}`;
+      window.open(url, '_blank');
+    }
+
+    // Первичная инициализация
+    renderMenu(menuItems);
+  </script>
 </body>
 </html>
