@@ -8,7 +8,20 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
   <style>
-    :root {
+   // Меню заведения קפה ולב
+    const menuItems = [
+      { id: 1, cat: 'coffee', name: 'קפוצ׳ינו / הפוך קטן', desc: 'אספרסו כפול עם חלב מוקצף (אפשרות לשיבולת שועל / סויה)', price: 14, image: 'https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=600&q=80' },
+      { id: 2, cat: 'coffee', name: 'קפוצ׳ינו / הפוך גדול', desc: 'קפה קטיפתי ועשיר בכוס גדולה', price: 16, image: 'https://images.unsplash.com/photo-1570968915860-54d5c301fc9f?auto=format&fit=crop&w=600&q=80' },
+      { id: 3, cat: 'coffee', name: 'אמריקנו', desc: 'מנת אספרסו עם מים חמים או קרח', price: 13, image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=600&q=80' },
+      { id: 4, cat: 'coffee', name: 'קולד ברו (חליטה קרה)', desc: 'מיצוי קפה קר איטי במשך 18 שעות, עדין ומעורר', price: 18, image: 'https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=600&q=80' },
+      { id: 5, cat: 'coffee', name: 'מאצ׳ה לאטה', desc: 'אבקת מאצ׳ה יפנית טהורה עם חלב חם או מוקצף קר', price: 19, image: 'https://images.unsplash.com/photo-1536256263959-770b48d82b0a?auto=format&fit=crop&w=600&q=80' },
+      { id: 6, cat: 'bakery', name: 'קרואסון חמאה שקדים', desc: 'קרואסון פריך ממולא קרם שקדים עשיר ושבבים קלויים', price: 21, image: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=600&q=80' },
+      { id: 7, cat: 'bakery', name: 'עוגת בבקה שוקולד', desc: 'שמרים רכים במילוי שוקולד מובחר', price: 18, image: 'https://images.unsplash.com/photo-1607958996333-41aef7caefaa?auto=format&fit=crop&w=600&q=80' },
+      { id: 8, cat: 'bakery', name: 'עוגת גבינה בסקית', desc: 'נימוחה ואפויה בטמפרטורה גבוהה עם מעטה שחום', price: 28, image: 'https://images.unsplash.com/photo-1524351199679-46cddf530c04?auto=format&fit=crop&w=600&q=80' },
+      { id: 9, cat: 'sandwiches', name: 'קרואסון סלמון מעושן', desc: 'סלמון נורווגי, גבינת שמנת, צלפים, מלפפון ושמיר', price: 34, image: 'https://images.unsplash.com/photo-1509722747041-616f39b57569?auto=format&fit=crop&w=600&q=80' },
+      { id: 10, cat: 'sandwiches', name: 'טוסט גאודה ופסטו', desc: 'לחם מחמצת כפרי, גאודה הולנדית, עגבניה מיובשת ופסטו בזיליקום', price: 32, image: 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=600&q=80' },
+      { id: 11, cat: 'sandwiches', name: 'כריך אבוקדו וביצה', desc: 'מחית אבוקדו מתובלת, ביצה רכה, צנונית ונבטים', price: 31, image: 'https://images.gastronom.ru/ik4SR0CbBjdMQGO9GPDQJXVwsXj2fjtwjEJtDFa3Nug/pr:recipe-cover-image/g:ce/rs:auto:0:0:0/L2Ntcy9hbGwtaW1hZ2VzLzk0NTk2MzhkLTUzMTMtNDk3NS05Mzk3LTViMTIwMzY0MjRiMS5qcGc.webp' }
+    ];
       --primary: #2b1e16;
       --accent: #b07d52;
       --accent-hover: #96673f;
