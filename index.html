@@ -31,7 +31,6 @@
       padding-bottom: 90px;
     }
 
-    /* Header */
     header {
       position: sticky;
       top: 0;
@@ -74,7 +73,6 @@
       gap: 0.75rem;
     }
 
-    /* Language Switcher */
     .lang-select {
       background: #fff;
       border: 1px solid var(--border);
@@ -117,7 +115,6 @@
       font-size: 0.8rem;
     }
 
-    /* Hero */
     .hero {
       max-width: 1100px;
       margin: 2rem auto;
@@ -151,7 +148,6 @@
     .meta-item { display: flex; align-items: center; gap: 0.4rem; color: var(--text); }
     .meta-item span.status { color: #16a34a; font-weight: 700; }
 
-    /* Categories */
     .categories {
       max-width: 1100px;
       margin: 2rem auto 1.5rem;
@@ -181,7 +177,6 @@
       border-color: var(--primary);
     }
 
-    /* Grid */
     .menu-grid {
       max-width: 1100px;
       margin: 0 auto;
@@ -199,14 +194,39 @@
       flex-direction: column;
       justify-content: space-between;
       transition: transform 0.2s, box-shadow 0.2s;
+      position: relative;
     }
     .card:hover {
       transform: translateY(-4px);
       box-shadow: 0 12px 24px rgba(0,0,0,0.06);
     }
+    
+    /* Особая карточка булочки */
+    .card.special-bun {
+      border: 2px solid #f472b6;
+      box-shadow: 0 4px 16px rgba(244, 114, 182, 0.2);
+    }
+    .special-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #ec4899;
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 0.25rem 0.65rem;
+      border-radius: 20px;
+      z-index: 2;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+    html[dir="ltr"] .special-badge {
+      right: auto;
+      left: 10px;
+    }
+
     .card-img-container {
       width: 100%;
-      height: 190px;
+      height: 220px;
       overflow: hidden;
       background: #f1ede8;
     }
@@ -249,6 +269,10 @@
       font-weight: 800;
       color: var(--primary);
     }
+    .price.priceless {
+      color: #ec4899;
+      font-size: 1.1rem;
+    }
     .add-btn {
       background: var(--bg);
       color: var(--primary);
@@ -265,8 +289,16 @@
       color: #fff;
       border-color: var(--accent);
     }
+    .add-btn.special-btn {
+      background: #fdf2f8;
+      border-color: #f472b6;
+      color: #be185d;
+    }
+    .add-btn.special-btn:hover {
+      background: #ec4899;
+      color: #fff;
+    }
 
-    /* Cart Drawer */
     .drawer-overlay {
       position: fixed;
       inset: 0;
@@ -292,21 +324,10 @@
       padding: 1.5rem;
     }
     
-    /* RTL / LTR Drawer Placement */
-    html[dir="rtl"] .cart-drawer {
-      left: 0;
-      transform: translateX(-100%);
-    }
-    html[dir="rtl"] .drawer-overlay.open .cart-drawer {
-      transform: translateX(0);
-    }
-    html[dir="ltr"] .cart-drawer {
-      right: 0;
-      transform: translateX(100%);
-    }
-    html[dir="ltr"] .drawer-overlay.open .cart-drawer {
-      transform: translateX(0);
-    }
+    html[dir="rtl"] .cart-drawer { left: 0; transform: translateX(-100%); }
+    html[dir="rtl"] .drawer-overlay.open .cart-drawer { transform: translateX(0); }
+    html[dir="ltr"] .cart-drawer { right: 0; transform: translateX(100%); }
+    html[dir="ltr"] .drawer-overlay.open .cart-drawer { transform: translateX(0); }
 
     .drawer-header {
       display: flex;
@@ -353,7 +374,6 @@
       font-weight: bold;
     }
 
-    /* Checkout Form */
     .checkout-form {
       border-top: 1px solid var(--border);
       padding-top: 1rem;
@@ -412,7 +432,6 @@
     }
     .submit-order:hover { background: #1eb954; }
 
-    /* Mobile Floating Bar */
     .floating-bar {
       display: none;
       position: fixed;
@@ -437,7 +456,6 @@
 </head>
 <body>
 
-  <!-- Header -->
   <header>
     <div class="nav-container">
       <a href="#" class="logo">
@@ -446,7 +464,6 @@
       </a>
       
       <div class="nav-actions">
-        <!-- Language Selector -->
         <select class="lang-select" id="lang-select" onchange="changeLanguage(this.value)">
           <option value="he">🇮🇱 עברית</option>
           <option value="en">🇬🇧 English</option>
@@ -463,7 +480,6 @@
   </header>
 
   <main>
-    <!-- Hero -->
     <section class="hero">
       <h2 id="hero-title">קפה משובח, מאפים טריים ואירוח מהלב</h2>
       <p id="hero-sub">קפה שכונתי אינטימי בראשון לציון. קפה מוקפד, כריכים ומאפים באפייה יומיומית.</p>
@@ -474,14 +490,10 @@
       </div>
     </section>
 
-    <!-- Categories -->
     <div class="categories" id="cat-container"></div>
-
-    <!-- Menu Grid -->
     <div class="menu-grid" id="menu-container"></div>
   </main>
 
-  <!-- Mobile Floating Bar -->
   <div class="floating-bar" id="floating-cart" onclick="toggleCart()" style="display: none;">
     <div>
       <strong id="float-count">0</strong> | <span id="float-total">0 ₪</span>
@@ -489,7 +501,6 @@
     <span id="float-action">לצפייה בהזמנה ←</span>
   </div>
 
-  <!-- Cart Drawer -->
   <div class="drawer-overlay" id="cart-overlay" onclick="handleOverlayClick(event)">
     <div class="cart-drawer">
       <div class="drawer-header">
@@ -538,7 +549,6 @@
   </div>
 
   <script>
-    // Мультиязычные переводы интерфейса
     const i18n = {
       he: {
         dir: 'rtl',
@@ -572,6 +582,8 @@
         viewOrder: 'לצפייה בהזמנה ←',
         alertContact: 'נא למלא שם ומספר טלפון ליצירת קשר',
         alertAddress: 'נא להזין כתובת מלאה למשלוח',
+        priceless: 'לא יסולא בפז 💖',
+        specialBadge: 'מיוחד במינו ✨',
         waHeader: '☕ *הזמנה חדשה - קפה ולב*',
         waName: '👤 *שם:*',
         waPhone: '📞 *טלפון:*',
@@ -613,6 +625,8 @@
         viewOrder: 'View order →',
         alertContact: 'Please enter your name and phone number',
         alertAddress: 'Please provide a delivery address',
+        priceless: 'Priceless 💖',
+        specialBadge: 'Exclusive ✨',
         waHeader: '☕ *New Order - Caffe & Heart*',
         waName: '👤 *Name:*',
         waPhone: '📞 *Phone:*',
@@ -654,6 +668,8 @@
         viewOrder: 'Посмотреть заказ →',
         alertContact: 'Пожалуйста, укажите имя и телефон для связи',
         alertAddress: 'Пожалуйста, введите адрес доставки',
+        priceless: 'Бесценно 💖',
+        specialBadge: 'Главное сокровище ✨',
         waHeader: '☕ *Новый заказ - Caffe & Heart*',
         waName: '👤 *Имя:*',
         waPhone: '📞 *Телефон:*',
@@ -695,6 +711,8 @@
         viewOrder: 'Переглянути замовлення →',
         alertContact: "Будь ласка, вкажіть ім'я та телефон для зв'язку",
         alertAddress: 'Будь ласка, вкажіть повну адресу доставки',
+        priceless: 'Безцінно 💖',
+        specialBadge: 'Головний скарб ✨',
         waHeader: '☕ *Нове замовлення - Caffe & Heart*',
         waName: "👤 *Ім'я:*",
         waPhone: '📞 *Телефон:*',
@@ -706,183 +724,88 @@
       }
     };
 
-    // Каталог товаров со всеми языками
     const menuItems = [
+      {
+        id: 100, cat: 'bakery', price: 0, isPriceless: true,
+        image: 'sweetest-bun.jpg',
+        names: {
+          he: 'הלחמנייה הכי מתוקה בעולם',
+          en: 'The Sweetest Bun in the World',
+          ru: 'Самая сладкая булочка в мире',
+          uk: 'Найсолодша булочка у світі'
+        },
+        descs: {
+          he: 'יחידה ומיוחדת במינה. אינה ניתנת להחלפה, מביאה חום, חיוך ואור מהרגע הראשון.',
+          en: 'One of a kind, irreplaceable, brings pure warmth, smiles, and light.',
+          ru: 'Единственная и неповторимая. Согревает теплом, озаряет улыбкой и делает мир прекраснее.',
+          uk: 'Єдина і неповторна. Зігріває ніжністю, сяє посмішкою та дарує безмежну радість.'
+        }
+      },
       {
         id: 1, cat: 'coffee', price: 14,
         image: 'https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=600&q=80',
-        names: {
-          he: 'קפוצ׳ינו / הפוך קטן',
-          en: 'Cappuccino (Small)',
-          ru: 'Капучино (маленький)',
-          uk: 'Капучино (маленький)'
-        },
-        descs: {
-          he: 'אספרסו כפול עם חלב מוקצף (אפשרות לשיבולת שועל / סויה)',
-          en: 'Double espresso with silky steamed milk (oat/soy option available)',
-          ru: 'Двойной эспрессо со взбитым молоком (есть овсяное и соевое)',
-          uk: 'Подвійний еспресо зі збитим молоком (є вівсяне та соєве)'
-        }
+        names: { he: 'קפוצ׳ינו / הפוך קטן', en: 'Cappuccino (Small)', ru: 'Капучино (маленький)', uk: 'Капучино (маленький)' },
+        descs: { he: 'אספרסו כפול עם חלב מוקצף (אפשרות לשיבולת שועל / סויה)', en: 'Double espresso with silky steamed milk', ru: 'Двойной эспрессо со взбитым молоком', uk: 'Подвійний еспресо зі збитим молоком' }
       },
       {
         id: 2, cat: 'coffee', price: 16,
         image: 'https://images.unsplash.com/photo-1570968915860-54d5c301fc9f?auto=format&fit=crop&w=600&q=80',
-        names: {
-          he: 'קפוצ׳ינו / הפוך גדול',
-          en: 'Cappuccino (Large)',
-          ru: 'Капучино (большой)',
-          uk: 'Капучино (великий)'
-        },
-        descs: {
-          he: 'קפה קטיפתי ועשיר בכוס גדולה',
-          en: 'Velvety and rich coffee in a large cup',
-          ru: 'Бархатистый насыщенный кофе в большой чашке',
-          uk: 'Оксамитова насичена кава у великій чашці'
-        }
+        names: { he: 'קפוצ׳ינו / הפוך גדול', en: 'Cappuccino (Large)', ru: 'Капучино (большой)', uk: 'Капучино (великий)' },
+        descs: { he: 'קפה קטיפתי ועשיר בכוס גדולה', en: 'Velvety and rich coffee in a large cup', ru: 'Бархатистый насыщенный кофе в большой чашке', uk: 'Оксамитова насичена кава у великій чашці' }
       },
       {
         id: 3, cat: 'coffee', price: 13,
         image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=600&q=80',
-        names: {
-          he: 'אמריקנו',
-          en: 'Americano',
-          ru: 'Американо',
-          uk: 'Американо'
-        },
-        descs: {
-          he: 'מנת אספרסו כפול עם מים חמים או קרח',
-          en: 'Double espresso with hot water or poured over ice',
-          ru: 'Двойной эспрессо с горячей водой или со льдом',
-          uk: 'Подвійний еспресо з гарячою водою або з льодом'
-        }
+        names: { he: 'אמריקנו', en: 'Americano', ru: 'Американо', uk: 'Американо' },
+        descs: { he: 'מנת אספרסו כפול עם מים חמים או קרח', en: 'Double espresso with hot water or poured over ice', ru: 'Двойной эспрессо с горячей водой или со льдом', uk: 'Подвійний еспресо з гарячою водою або з льодом' }
       },
       {
         id: 4, cat: 'coffee', price: 18,
         image: 'https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=600&q=80',
-        names: {
-          he: 'קולד ברו (חליטה קרה)',
-          en: 'Cold Brew Coffee',
-          ru: 'Колд Брю (холодный кофе)',
-          uk: 'Колд Брю (холодна кава)'
-        },
-        descs: {
-          he: 'מיצוי איטי במשך 18 שעות, עדין ומעורר',
-          en: '18-hour slow steeped specialty coffee, smooth & energizing',
-          ru: 'Холодное медленное настаивание 18 часов. Мягкий и бодрящий',
-          uk: 'Холодне повільне настоювання 18 годин. М’який та підбадьорливий'
-        }
+        names: { he: 'קולד ברו (חליטה קרה)', en: 'Cold Brew Coffee', ru: 'Колд Брю (холодный кофе)', uk: 'Колд Брю (холодна кава)' },
+        descs: { he: 'מיצוי איטי במשך 18 שעות, עדין ומעורר', en: '18-hour slow steeped specialty coffee', ru: 'Холодное медленное настаивание 18 часов', uk: 'Холодне повільне настоювання 18 годин' }
       },
       {
         id: 5, cat: 'coffee', price: 19,
         image: 'https://images.unsplash.com/photo-1536256263959-770b48d82b0a?auto=format&fit=crop&w=600&q=80',
-        names: {
-          he: 'מאצ׳ה לאטה',
-          en: 'Matcha Latte',
-          ru: 'Матча латте',
-          uk: 'Матча лате'
-        },
-        descs: {
-          he: 'מאצ׳ה יפנית טהורה עם חלב חם או קר',
-          en: 'Ceremonial Japanese matcha with steamed or iced milk',
-          ru: 'Японский чай матча с теплым или холодным молоком',
-          uk: 'Японський чай матча з теплим або холодним молоком'
-        }
+        names: { he: 'מאצ׳ה לאטה', en: 'Matcha Latte', ru: 'Матча латте', uk: 'Матча лате' },
+        descs: { he: 'מאצ׳ה יפנית טהורה עם חלב חם או קר', en: 'Ceremonial Japanese matcha with milk', ru: 'Японский чай матча с молоком', uk: 'Японський чай матча з молоком' }
       },
       {
         id: 6, cat: 'bakery', price: 21,
         image: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=600&q=80',
-        names: {
-          he: 'קרואסון חמאה שקדים',
-          en: 'Almond Butter Croissant',
-          ru: 'Миндальный круассан',
-          uk: 'Мигдалевий круасан'
-        },
-        descs: {
-          he: 'קרואסון פריך במילוי קרם שקדים עשיר ושבבים קלויים',
-          en: 'Flaky butter croissant filled with rich almond frangipane',
-          ru: 'Слоеный круассан с миндальным кремом и лепестками миндаля',
-          uk: 'Листковий круасан з ніжним мигдалевим кремом та пелюстками'
-        }
+        names: { he: 'קרואסון חמאה שקדים', en: 'Almond Butter Croissant', ru: 'Миндальный круассан', uk: 'Мигдалевий круасан' },
+        descs: { he: 'קרואסון פריך במילוי קרם שקדים עשיר ושבבים קלויים', en: 'Flaky butter croissant filled with almond frangipane', ru: 'Слоеный круассан с миндальным кремом', uk: 'Листковий круасан з мигдалевим кремом' }
       },
       {
         id: 7, cat: 'bakery', price: 18,
         image: 'https://images.unsplash.com/photo-1607958996333-41aef7caefaa?auto=format&fit=crop&w=600&q=80',
-        names: {
-          he: 'עוגת בבקה שוקולד',
-          en: 'Chocolate Babka Slice',
-          ru: 'Бабка с шоколадом',
-          uk: 'Бабка з шоколадом'
-        },
-        descs: {
-          he: 'בצק שמרים רך במילוי שכבות שוקולד מובחר',
-          en: 'Braided sweet brioche dough swirled with dark Belgian chocolate',
-          ru: 'Нежное дрожжевое тесто с прослойками темного шоколада',
-          uk: 'Ніжне дріжджове тісто з прошарками темного шоколаду'
-        }
+        names: { he: 'עוגת בבקה שוקולד', en: 'Chocolate Babka Slice', ru: 'Бабка с шоколадом', uk: 'Бабка з шоколадом' },
+        descs: { he: 'בצק שמרים רך במילוי שכבות שוקולד מובחר', en: 'Brioche dough swirled with dark Belgian chocolate', ru: 'Нежное дрожжевое тесто с темным шоколадом', uk: 'Ніжне тісто з темним шоколадом' }
       },
       {
         id: 8, cat: 'bakery', price: 28,
         image: 'https://images.unsplash.com/photo-1524351199679-46cddf530c04?auto=format&fit=crop&w=600&q=80',
-        names: {
-          he: 'עוגת גבינה בסקית',
-          en: 'Basque Burnt Cheesecake',
-          ru: 'Баскский чизкейк',
-          uk: 'Баскський чизкейк'
-        },
-        descs: {
-          he: 'קרמית ונימוחה עם מעטה מקורמל שחום',
-          en: 'Creamy, melt-in-the-mouth texture with a caramelized crust',
-          ru: 'Кремовый, тающий во рту чизкейк с карамельной корочкой',
-          uk: 'Кремовий, ніжний чизкейк із карамельною скоринкою'
-        }
+        names: { he: 'עוגת גבינה בסקית', en: 'Basque Burnt Cheesecake', ru: 'Баскский чизкейк', uk: 'Баскський чизкейк' },
+        descs: { he: 'קרמית ונימוחה עם מעטה מקורמל שחום', en: 'Creamy texture with a caramelized crust', ru: 'Кремовый чизкейк с карамельной корочкой', uk: 'Кремовий чизкейк із карамельною скоринкою' }
       },
       {
         id: 9, cat: 'sandwiches', price: 34,
         image: 'https://images.unsplash.com/photo-1509722747041-616f39b57569?auto=format&fit=crop&w=600&q=80',
-        names: {
-          he: 'קרואסון סלמון מעושן',
-          en: 'Smoked Salmon Croissant',
-          ru: 'Круассан с лососем',
-          uk: 'Круасан з лососем'
-        },
-        descs: {
-          he: 'סלמון מעושן, גבינת שמנת, צלפים, מלפפון ושמיר',
-          en: 'Smoked salmon, cream cheese, capers, cucumber, fresh dill',
-          ru: 'Копченый лосось, крем-сыр, каперсы, огурец и свежий укроп',
-          uk: 'Копчений лосось, крем-сир, каперси, огірок та свіжий кріп'
-        }
+        names: { he: 'קרואסון סלמון מעושן', en: 'Smoked Salmon Croissant', ru: 'Круассан с лососем', uk: 'Круасан з лососем' },
+        descs: { he: 'סלמון מעושן, גבינת שמנת, צלפים, מלפפון ושמיר', en: 'Smoked salmon, cream cheese, capers, cucumber, dill', ru: 'Копченый лосось, крем-сыр, огурец и укроп', uk: 'Копчений лосось, крем-сир, огірок та кріп' }
       },
       {
         id: 10, cat: 'sandwiches', price: 32,
         image: 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=600&q=80',
-        names: {
-          he: 'טוסט גאודה ופסטו',
-          en: 'Gouda & Pesto Toast',
-          ru: 'Тост с сыром гауда и песто',
-          uk: 'Тост з гаудою та песто'
-        },
-        descs: {
-          he: 'לחם מחמצת, גאודה הולנדית, עגבניה מיובשת ופסטו בזיליקום',
-          en: 'Artisan sourdough, aged gouda, sun-dried tomatoes & pesto',
-          ru: 'Хлеб на закваске, выдержанная гауда, вяленые томаты и базиликовый песто',
-          uk: 'Хліб на заквасці, витримана гауда, в’ялені томати та базиліковий песто'
-        }
+        names: { he: 'טוסט גאודה ופסטו', en: 'Gouda & Pesto Toast', ru: 'Тост с сыром гауда и песто', uk: 'Тост з гаудою та песто' },
+        descs: { he: 'לחם מחמצת, גאודה הולנדית, עגבניה מיובשת ופסטו בזיליקום', en: 'Sourdough, aged gouda, sun-dried tomatoes & pesto', ru: 'Хлеб на закваске, гауда, томаты и базиликовый песто', uk: 'Хліб на заквасці, гауда, томати та базиліковий песто' }
       },
       {
         id: 11, cat: 'sandwiches', price: 31,
         image: 'https://images.gastronom.ru/ik4SR0CbBjdMQGO9GPDQJXVwsXj2fjtwjEJtDFa3Nug/pr:recipe-cover-image/g:ce/rs:auto:0:0:0/L2Ntcy9hbGwtaW1hZ2VzLzk0NTk2MzhkLTUzMTMtNDk3NS05Mzk3LTViMTIwMzY0MjRiMS5qcGc.webp',
-        names: {
-          he: 'כריך אבוקדו וביצה',
-          en: 'Avocado & Egg Toast',
-          ru: 'Тост с авокадо и яйцом',
-          uk: 'Тост з авокадо та яйцем'
-        },
-        descs: {
-          he: 'אבוקדו טרי מתובל, ביצה רכה, צנונית ונבטים',
-          en: 'Fresh seasoned avocado mash, soft boiled egg, radish & microgreens',
-          ru: 'Спелый авокадо со специями, яйцо всмятку, редис и микрозелень',
-          uk: 'Стиглий авокадо зі спеціями, яйце некруто, редиска та мікрозелень'
-        }
+        names: { he: 'כריך אבוקדו וביצה', en: 'Avocado & Egg Toast', ru: 'Тост с авокадо и яйцом', uk: 'Тост з авокадо та яйцем' },
+        descs: { he: 'אבוקדו טרי מתובל, ביצה רכה, צנונית ונבטים', en: 'Fresh avocado mash, soft boiled egg, radish & greens', ru: 'Спелый авокадо, яйцо всмятку, редис и зелень', uk: 'Стиглий авокадо, яйце некруто, редиска та зелень' }
       }
     ];
 
@@ -900,7 +823,6 @@
       document.documentElement.lang = lang;
       document.documentElement.dir = t.dir;
 
-      // Текстовые блоки
       document.getElementById('page-title').innerText = t.pageTitle;
       document.getElementById('brand-title').innerText = t.brand;
       document.getElementById('cart-title').innerText = t.cartBtn;
@@ -959,7 +881,8 @@
         : menuItems.filter(i => i.cat === currentCategory);
 
       container.innerHTML = filtered.map(item => `
-        <div class="card">
+        <div class="card ${item.isPriceless ? 'special-bun' : ''}">
+          ${item.isPriceless ? `<span class="special-badge">${t.specialBadge}</span>` : ''}
           <div class="card-img-container">
             <img class="card-img" src="${item.image}" alt="${item.names[currentLang]}" loading="lazy">
           </div>
@@ -967,8 +890,12 @@
             <h3 class="card-title">${item.names[currentLang]}</h3>
             <p class="card-desc">${item.descs[currentLang]}</p>
             <div class="card-footer">
-              <span class="price">${item.price} ₪</span>
-              <button class="add-btn" onclick="addToCart(${item.id})">${t.addBtn}</button>
+              <span class="price ${item.isPriceless ? 'priceless' : ''}">
+                ${item.isPriceless ? t.priceless : `${item.price} ₪`}
+              </span>
+              <button class="add-btn ${item.isPriceless ? 'special-btn' : ''}" onclick="addToCart(${item.id})">
+                ${item.isPriceless ? '❤️ ' + t.addBtn : t.addBtn}
+              </button>
             </div>
           </div>
         </div>
@@ -1017,11 +944,13 @@
         const itemTotal = item.price * cart[id];
         total += itemTotal;
 
+        const priceText = item.isPriceless ? t.priceless : `${item.price} ₪ × ${cart[id]} = ${itemTotal} ₪`;
+
         html += `
           <div class="cart-item">
             <div>
               <div style="font-weight: 700;">${item.names[currentLang]}</div>
-              <div style="color: var(--text-muted); font-size: 0.85rem;">${item.price} ₪ × ${cart[id]} = ${itemTotal} ₪</div>
+              <div style="color: var(--text-muted); font-size: 0.85rem;">${priceText}</div>
             </div>
             <div class="qty-controls">
               <button class="qty-btn" onclick="changeQty(${id}, -1)">-</button>
@@ -1082,18 +1011,21 @@
       let total = 0;
       for (let id in cart) {
         const item = menuItems.find(i => i.id == id);
-        text += `• ${item.names[currentLang]} × ${cart[id]} (${item.price * cart[id]} ₪)\n`;
-        total += item.price * cart[id];
+        if (item.isPriceless) {
+          text += `• ${item.names[currentLang]} × ${cart[id]} (${t.priceless})\n`;
+        } else {
+          text += `• ${item.names[currentLang]} × ${cart[id]} (${item.price * cart[id]} ₪)\n`;
+          total += item.price * cart[id];
+        }
       }
       text += `\n${t.waTotal} ${total} ₪`;
 
       // При необходимости укажите реальный номер WhatsApp (например, "972501234567")
-      const phoneTo = "79217827572"; 
+      const phoneTo = "972500000000"; 
       const url = `https://wa.me/${phoneTo}?text=${encodeURIComponent(text)}`;
       window.open(url, '_blank');
     }
 
-    // Инициализация при загрузке
     changeLanguage(currentLang);
   </script>
 </body>
