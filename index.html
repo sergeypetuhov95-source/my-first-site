@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>קפה ולב | Caffe & Heart — תפריט והזמנות</title>
+  <title id="page-title">קפה ולב | Caffe & Heart</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&family=Inter:wght@400;600;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
   <style>
     :root {
       --primary: #2b1e16;
@@ -17,8 +17,7 @@
       --text: #2d2421;
       --text-muted: #736b66;
       --border: #ede6df;
-      --badge: #2b1e16;
-      --font-body: 'Assistant', sans-serif;
+      --font-body: 'Assistant', 'Inter', system-ui, sans-serif;
       --font-title: 'Playfair Display', serif;
     }
 
@@ -32,7 +31,7 @@
       padding-bottom: 90px;
     }
 
-    /* Навигация */
+    /* Header */
     header {
       position: sticky;
       top: 0;
@@ -48,6 +47,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 0.5rem;
     }
     .logo {
       display: flex;
@@ -68,20 +68,45 @@
       font-size: 1rem;
     }
 
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    /* Language Switcher */
+    .lang-select {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 0.45rem 0.75rem;
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--primary);
+      cursor: pointer;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .lang-select:focus {
+      border-color: var(--accent);
+    }
+
     .cart-btn {
       background: var(--primary);
       color: #fff;
       border: none;
       border-radius: 50px;
-      padding: 0.6rem 1.25rem;
-      font-family: var(--font-body);
-      font-size: 0.95rem;
+      padding: 0.55rem 1.1rem;
+      font-family: inherit;
+      font-size: 0.9rem;
       font-weight: 600;
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      transition: all 0.2s;
+      white-space: nowrap;
+      transition: background 0.2s;
     }
     .cart-btn:hover { background: var(--accent); }
     .cart-badge {
@@ -92,7 +117,7 @@
       font-size: 0.8rem;
     }
 
-    /* Главный баннер */
+    /* Hero */
     .hero {
       max-width: 1100px;
       margin: 2rem auto;
@@ -100,13 +125,13 @@
       text-align: center;
     }
     .hero h2 {
-      font-size: 2.5rem;
+      font-size: 2.3rem;
       color: var(--primary);
       margin-bottom: 0.75rem;
       font-weight: 800;
     }
     .hero p {
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       color: var(--text-muted);
       max-width: 600px;
       margin: 0 auto 1.5rem;
@@ -115,7 +140,7 @@
       display: inline-flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 1.5rem;
+      gap: 1.2rem;
       background: var(--card-bg);
       border: 1px solid var(--border);
       padding: 0.75rem 1.5rem;
@@ -126,7 +151,7 @@
     .meta-item { display: flex; align-items: center; gap: 0.4rem; color: var(--text); }
     .meta-item span.status { color: #16a34a; font-weight: 700; }
 
-    /* Фильтры категорий */
+    /* Categories */
     .categories {
       max-width: 1100px;
       margin: 2rem auto 1.5rem;
@@ -141,8 +166,8 @@
       background: transparent;
       border: 1px solid var(--border);
       border-radius: 25px;
-      padding: 0.5rem 1.25rem;
-      font-family: var(--font-body);
+      padding: 0.5rem 1.2rem;
+      font-family: inherit;
       font-size: 0.95rem;
       font-weight: 600;
       color: var(--text-muted);
@@ -156,7 +181,7 @@
       border-color: var(--primary);
     }
 
-    /* Сетка меню */
+    /* Grid */
     .menu-grid {
       max-width: 1100px;
       margin: 0 auto;
@@ -192,9 +217,7 @@
       display: block;
       transition: transform 0.3s;
     }
-    .card:hover .card-img {
-      transform: scale(1.05);
-    }
+    .card:hover .card-img { transform: scale(1.05); }
     .card-content {
       padding: 1.25rem;
       flex-grow: 1;
@@ -232,7 +255,7 @@
       border: 1px solid var(--border);
       border-radius: 8px;
       padding: 0.45rem 0.9rem;
-      font-family: var(--font-body);
+      font-family: inherit;
       font-weight: 700;
       cursor: pointer;
       transition: all 0.2s;
@@ -243,7 +266,7 @@
       border-color: var(--accent);
     }
 
-    /* Модальное окно корзины */
+    /* Cart Drawer */
     .drawer-overlay {
       position: fixed;
       inset: 0;
@@ -259,18 +282,32 @@
       position: fixed;
       top: 0;
       bottom: 0;
-      left: 0;
       width: 100%;
       max-width: 440px;
       background: #fff;
       z-index: 201;
-      transform: translateX(-100%);
       transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
       display: flex;
       flex-direction: column;
       padding: 1.5rem;
     }
-    .drawer-overlay.open .cart-drawer { transform: translateX(0); }
+    
+    /* RTL / LTR Drawer Placement */
+    html[dir="rtl"] .cart-drawer {
+      left: 0;
+      transform: translateX(-100%);
+    }
+    html[dir="rtl"] .drawer-overlay.open .cart-drawer {
+      transform: translateX(0);
+    }
+    html[dir="ltr"] .cart-drawer {
+      right: 0;
+      transform: translateX(100%);
+    }
+    html[dir="ltr"] .drawer-overlay.open .cart-drawer {
+      transform: translateX(0);
+    }
+
     .drawer-header {
       display: flex;
       justify-content: space-between;
@@ -316,7 +353,7 @@
       font-weight: bold;
     }
 
-    /* Форма оформления */
+    /* Checkout Form */
     .checkout-form {
       border-top: 1px solid var(--border);
       padding-top: 1rem;
@@ -333,7 +370,7 @@
       padding: 0.6rem 0.75rem;
       border: 1px solid var(--border);
       border-radius: 8px;
-      font-family: var(--font-body);
+      font-family: inherit;
       font-size: 0.95rem;
     }
     .order-type-switch {
@@ -347,6 +384,7 @@
       border: 1px solid var(--border);
       background: var(--bg);
       border-radius: 8px;
+      font-family: inherit;
       font-weight: 600;
       cursor: pointer;
     }
@@ -362,9 +400,9 @@
       border: none;
       padding: 0.9rem;
       border-radius: 10px;
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       font-weight: 700;
-      font-family: var(--font-body);
+      font-family: inherit;
       cursor: pointer;
       margin-top: 0.5rem;
       display: flex;
@@ -374,7 +412,7 @@
     }
     .submit-order:hover { background: #1eb954; }
 
-    /* Плавающая кнопка для мобильных */
+    /* Mobile Floating Bar */
     .floating-bar {
       display: none;
       position: fixed;
@@ -399,153 +437,544 @@
 </head>
 <body>
 
-  <!-- Навигация -->
+  <!-- Header -->
   <header>
     <div class="nav-container">
       <a href="#" class="logo">
-        <h1>קפה ולב</h1>
+        <h1 id="brand-title">קפה ולב</h1>
         <span>Caffe & Heart</span>
       </a>
-      <button class="cart-btn" onclick="toggleCart()">
-        🛒 סל הזמנות
-        <span class="cart-badge" id="cart-count">0</span>
-      </button>
+      
+      <div class="nav-actions">
+        <!-- Language Selector -->
+        <select class="lang-select" id="lang-select" onchange="changeLanguage(this.value)">
+          <option value="he">🇮🇱 עברית</option>
+          <option value="en">🇬🇧 English</option>
+          <option value="ru">🇷🇺 Русский</option>
+          <option value="uk">🇺🇦 Українська</option>
+        </select>
+
+        <button class="cart-btn" onclick="toggleCart()">
+          <span id="cart-title">סל הזמנות</span>
+          <span class="cart-badge" id="cart-count">0</span>
+        </button>
+      </div>
     </div>
   </header>
 
-  <!-- Инфо-блок -->
   <main>
+    <!-- Hero -->
     <section class="hero">
-      <h2>קפה משובח, מאפים טריים ואירוח מהלב</h2>
-      <p>קפה שכונתי אינטימי בראשון לציון. קפה מוקפד, כריכים ומאפים באפייה יומיומית.</p>
+      <h2 id="hero-title">קפה משובח, מאפים טריים ואירוח מהלב</h2>
+      <p id="hero-sub">קפה שכונתי אינטימי בראשון לציון. קפה מוקפד, כריכים ומאפים באפייה יומיומית.</p>
       <div class="shop-meta">
-        <div class="meta-item">📍 רחוב הורוביץ 36, ראשון לציון</div>
-        <div class="meta-item">⏰ א'-ה' 08:00–19:00 | ו' 08:00–14:00</div>
-        <div class="meta-item"><span class="status">● פתוח להזמנות</span></div>
+        <div class="meta-item" id="meta-address">📍 רחוב הורוביץ 36, ראשון לציון</div>
+        <div class="meta-item" id="meta-hours">⏰ א'-ה' 08:00–19:00 | ו' 08:00–14:00</div>
+        <div class="meta-item"><span class="status" id="meta-status">● פתוח להזמנות</span></div>
       </div>
     </section>
 
-    <!-- Фильтры категорий -->
-    <div class="categories">
-      <button class="cat-pill active" onclick="filterCat('all')">הכל</button>
-      <button class="cat-pill" onclick="filterCat('coffee')">☕ קפה ושתייה</button>
-      <button class="cat-pill" onclick="filterCat('bakery')">🥐 מאפים ומתוקים</button>
-      <button class="cat-pill" onclick="filterCat('sandwiches')">🥪 כריכים וטוסטים</button>
-    </div>
+    <!-- Categories -->
+    <div class="categories" id="cat-container"></div>
 
-    <!-- Список меню -->
+    <!-- Menu Grid -->
     <div class="menu-grid" id="menu-container"></div>
   </main>
 
-  <!-- Мобильная плавающая плашка корзины -->
+  <!-- Mobile Floating Bar -->
   <div class="floating-bar" id="floating-cart" onclick="toggleCart()" style="display: none;">
     <div>
-      <strong id="float-count">0 פריטים</strong> | <span id="float-total">0 ₪</span>
+      <strong id="float-count">0</strong> | <span id="float-total">0 ₪</span>
     </div>
-    <span>לצפייה בהזמנה ←</span>
+    <span id="float-action">לצפייה בהזמנה ←</span>
   </div>
 
-  <!-- Корзина (Drawer) -->
+  <!-- Cart Drawer -->
   <div class="drawer-overlay" id="cart-overlay" onclick="handleOverlayClick(event)">
     <div class="cart-drawer">
       <div class="drawer-header">
-        <h3>ההזמנה שלך</h3>
+        <h3 id="drawer-title">ההזמנה שלך</h3>
         <button class="close-btn" onclick="toggleCart()">✕</button>
       </div>
 
-      <div class="cart-items" id="cart-items-list">
-        <p style="text-align: center; color: var(--text-muted); margin-top: 2rem;">הסל עדיין ריק. הוסיפו משהו טעים מהתפריט :)</p>
-      </div>
+      <div class="cart-items" id="cart-items-list"></div>
 
       <div class="checkout-form" id="checkout-block" style="display: none;">
         <div class="order-type-switch">
-          <button type="button" class="type-btn active" id="btn-pickup" onclick="setOrderType('איסוף עצמי')">איסוף עצמי מהמקום</button>
-          <button type="button" class="type-btn" id="btn-delivery" onclick="setOrderType('משלוח')">משלוח</button>
+          <button type="button" class="type-btn active" id="btn-pickup" onclick="setOrderType('pickup')"></button>
+          <button type="button" class="type-btn" id="btn-delivery" onclick="setOrderType('delivery')"></button>
         </div>
 
         <div class="form-group">
-          <label>שם מלא</label>
-          <input type="text" class="form-input" id="cust-name" placeholder="שם ומשפחה" required>
+          <label id="lbl-name">שם מלא</label>
+          <input type="text" class="form-input" id="cust-name" required>
         </div>
 
         <div class="form-group">
-          <label>טלפון</label>
+          <label id="lbl-phone">טלפון</label>
           <input type="tel" class="form-input" id="cust-phone" placeholder="050-0000000" required>
         </div>
 
         <div class="form-group" id="address-field" style="display: none;">
-          <label>כתובת מדויקת למשלוח</label>
-          <input type="text" class="form-input" id="cust-address" placeholder="רחוב, מספר בית, דירה">
+          <label id="lbl-address">כתובת למשלוח</label>
+          <input type="text" class="form-input" id="cust-address">
         </div>
 
         <div class="form-group">
-          <label>הערות להזמנה (סוג חלב, סוכר וכו')</label>
-          <input type="text" class="form-input" id="cust-notes" placeholder="למשל: שיבולת שועל, בלי בצל">
+          <label id="lbl-notes">הערות להזמנה</label>
+          <input type="text" class="form-input" id="cust-notes">
         </div>
 
         <div style="display: flex; justify-content: space-between; margin: 1rem 0; font-size: 1.2rem; font-weight: 800;">
-          <span>סה״כ לתשלום:</span>
+          <span id="lbl-total">סה״כ לתשלום:</span>
           <span id="final-total">0 ₪</span>
         </div>
 
         <button class="submit-order" onclick="submitToWhatsApp()">
-          שליחת הזמנה ב-WhatsApp 💬
+          <span id="btn-send-whatsapp">שליחת הזמנה ב-WhatsApp</span> 💬
         </button>
       </div>
     </div>
   </div>
 
   <script>
-    // Меню заведения קפה ולב
+    // Мультиязычные переводы интерфейса
+    const i18n = {
+      he: {
+        dir: 'rtl',
+        pageTitle: 'קפה ולב | Caffe & Heart — תפריט והזמנות',
+        brand: 'קפה ולב',
+        cartBtn: '🛒 סל הזמנות',
+        heroTitle: 'קפה משובח, מאפים טריים ואירוח מהלב',
+        heroSub: 'קפה שכונתי אינטימי בראשון לציון. קפה מוקפד, כריכים ומאפים באפייה יומיומית.',
+        address: '📍 רחוב הורוביץ 36, ראשון לציון',
+        hours: "⏰ א'-ה' 08:00–19:00 | ו' 08:00–14:00",
+        status: '● פתוח להזמנות',
+        all: 'הכל',
+        coffee: '☕ קפה ושתייה',
+        bakery: '🥐 מאפים ומתוקים',
+        sandwiches: '🥪 כריכים וטוסטים',
+        addBtn: '+ הוספה לסל',
+        drawerTitle: 'ההזמנה שלך',
+        emptyCart: 'הסל עדיין ריק. הוסיפו משהו טעים מהתפריט :)',
+        pickup: 'איסוף עצמי מהמקום',
+        delivery: 'משלוח',
+        name: 'שם מלא',
+        namePlh: 'שם ומשפחה',
+        phone: 'טלפון',
+        addressLbl: 'כתובת מלאה למשלוח',
+        addressPlh: 'רחוב, מספר בית, דירה',
+        notes: "הערות להזמנה (סוג חלב, סוכר וכו')",
+        notesPlh: 'למשל: שיבולת שועל, בלי סוכר',
+        total: 'סה״כ לתשלום:',
+        sendWA: 'שליחת הזמנה ב-WhatsApp',
+        itemsWord: 'פריטים',
+        viewOrder: 'לצפייה בהזמנה ←',
+        alertContact: 'נא למלא שם ומספר טלפון ליצירת קשר',
+        alertAddress: 'נא להזין כתובת מלאה למשלוח',
+        waHeader: '☕ *הזמנה חדשה - קפה ולב*',
+        waName: '👤 *שם:*',
+        waPhone: '📞 *טלפון:*',
+        waType: '📦 *סוג הזמנה:*',
+        waAddress: '📍 *כתובת:*',
+        waNotes: '📝 *הערות:*',
+        waDetails: '*פירוט הפריטים:*',
+        waTotal: '💰 *סה״כ לתשלום:*'
+      },
+      en: {
+        dir: 'ltr',
+        pageTitle: 'Caffe & Heart | Menu & Order',
+        brand: 'Caffe & Heart',
+        cartBtn: '🛒 Order Cart',
+        heroTitle: 'Specialty Coffee, Fresh Pastries & Warm Hospitality',
+        heroSub: 'An intimate neighborhood café in Rishon LeZion. Carefully roasted coffee, artisan sandwiches, and daily fresh bakery.',
+        address: '📍 36 Horowitz St, Rishon LeZion',
+        hours: '⏰ Sun-Thu 08:00–19:00 | Fri 08:00–14:00',
+        status: '● Open for orders',
+        all: 'All',
+        coffee: '☕ Coffee & Drinks',
+        bakery: '🥐 Bakery & Sweets',
+        sandwiches: '🥪 Sandwiches & Toasts',
+        addBtn: '+ Add to Cart',
+        drawerTitle: 'Your Order',
+        emptyCart: 'Your cart is empty. Pick something tasty from the menu :)',
+        pickup: 'Self Pickup',
+        delivery: 'Delivery',
+        name: 'Full Name',
+        namePlh: 'First and last name',
+        phone: 'Phone Number',
+        addressLbl: 'Delivery Address',
+        addressPlh: 'Street, building, apt',
+        notes: 'Order Notes (milk type, sugar, etc.)',
+        notesPlh: 'e.g. oat milk, no sugar',
+        total: 'Total:',
+        sendWA: 'Send Order via WhatsApp',
+        itemsWord: 'items',
+        viewOrder: 'View order →',
+        alertContact: 'Please enter your name and phone number',
+        alertAddress: 'Please provide a delivery address',
+        waHeader: '☕ *New Order - Caffe & Heart*',
+        waName: '👤 *Name:*',
+        waPhone: '📞 *Phone:*',
+        waType: '📦 *Type:*',
+        waAddress: '📍 *Address:*',
+        waNotes: '📝 *Notes:*',
+        waDetails: '*Order Items:*',
+        waTotal: '💰 *Total:*'
+      },
+      ru: {
+        dir: 'ltr',
+        pageTitle: 'קפה ולב | Caffe & Heart — Меню и заказ',
+        brand: 'קפה ולב',
+        cartBtn: '🛒 Корзина',
+        heroTitle: 'Спешелти кофе, свежая выпечка и тепло от сердца',
+        heroSub: 'Уютная районная кофейня в Ришон-ле-Ционе. Качественный кофе, авторские сэндвичи и ежедневная выпечка.',
+        address: '📍 ул. Горовиц 36, Ришон-ле-Цион',
+        hours: '⏰ Вс-Чт 08:00–19:00 | Пт 08:00–14:00',
+        status: '● Открыто для заказов',
+        all: 'Всё меню',
+        coffee: '☕ Кофе и напитки',
+        bakery: '🥐 Выпечка и десерты',
+        sandwiches: '🥪 Сэндвичи и тосты',
+        addBtn: '+ В корзину',
+        drawerTitle: 'Ваш заказ',
+        emptyCart: 'В корзине пока пусто. Выберите что-нибудь вкусное из меню :)',
+        pickup: 'Самовывоз',
+        delivery: 'Доставка',
+        name: 'Ваше имя',
+        namePlh: 'Имя и фамилия',
+        phone: 'Номер телефона',
+        addressLbl: 'Адрес доставки',
+        addressPlh: 'Улица, дом, квартира',
+        notes: 'Пожелания к заказу (молоко, сахар и т.д.)',
+        notesPlh: 'например: овсяное молоко, без сахара',
+        total: 'Итого к оплате:',
+        sendWA: 'Отправить заказ в WhatsApp',
+        itemsWord: 'шт.',
+        viewOrder: 'Посмотреть заказ →',
+        alertContact: 'Пожалуйста, укажите имя и телефон для связи',
+        alertAddress: 'Пожалуйста, введите адрес доставки',
+        waHeader: '☕ *Новый заказ - Caffe & Heart*',
+        waName: '👤 *Имя:*',
+        waPhone: '📞 *Телефон:*',
+        waType: '📦 *Тип заказа:*',
+        waAddress: '📍 *Адрес:*',
+        waNotes: '📝 *Примечания:*',
+        waDetails: '*Состав заказа:*',
+        waTotal: '💰 *Итого к оплате:*'
+      },
+      uk: {
+        dir: 'ltr',
+        pageTitle: 'קפה ולב | Caffe & Heart — Меню та замовлення',
+        brand: 'קפה ולב',
+        cartBtn: '🛒 Кошик',
+        heroTitle: 'Особлива кава, свіжа випічка та турбота від серця',
+        heroSub: 'Затишна кав’ярня у Рішон-ле-Ціоні. Добірна кава, хрусткі сендвічі та щоденна свіжа випічка.',
+        address: '📍 вул. Горовіц 36, Рішон-ле-Ціон',
+        hours: '⏰ Нд-Чт 08:00–19:00 | Пт 08:00–14:00',
+        status: '● Відкрито для замовлень',
+        all: 'Усе меню',
+        coffee: '☕ Кава та напої',
+        bakery: '🥐 Випічка і десерти',
+        sandwiches: '🥪 Сендвічі та тости',
+        addBtn: '+ До кошика',
+        drawerTitle: 'Ваше замовлення',
+        emptyCart: 'Кошик порожній. Оберіть щось смачненьке з меню :)',
+        pickup: 'Самовивіз',
+        delivery: 'Доставка',
+        name: "Ваше ім'я",
+        namePlh: "Ім'я та прізвище",
+        phone: 'Номер телефону',
+        addressLbl: 'Адреса доставки',
+        addressPlh: 'Вулиця, будинок, квартира',
+        notes: 'Коментар до замовлення (молоко, цукор тощо)',
+        notesPlh: 'наприклад: вівсяне молоко, без цукру',
+        total: 'Разом до сплати:',
+        sendWA: 'Надіслати замовлення у WhatsApp',
+        itemsWord: 'шт.',
+        viewOrder: 'Переглянути замовлення →',
+        alertContact: "Будь ласка, вкажіть ім'я та телефон для зв'язку",
+        alertAddress: 'Будь ласка, вкажіть повну адресу доставки',
+        waHeader: '☕ *Нове замовлення - Caffe & Heart*',
+        waName: "👤 *Ім'я:*",
+        waPhone: '📞 *Телефон:*',
+        waType: '📦 *Тип замовлення:*',
+        waAddress: '📍 *Адреса:*',
+        waNotes: '📝 *Коментар:*',
+        waDetails: '*Склад замовлення:*',
+        waTotal: '💰 *Разом до сплати:*'
+      }
+    };
+
+    // Каталог товаров со всеми языками
     const menuItems = [
-      { id: 1, cat: 'coffee', name: 'קפוצ׳ינו / הפוך קטן', desc: 'אספרסו כפול עם חלב מוקצף (אפשרות לשיבולת שועל / סויה)', price: 14, image: 'https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=600&q=80' },
-      { id: 2, cat: 'coffee', name: 'קפוצ׳ינו / הפוך גדול', desc: 'קפה קטיפתי ועשיר בכוס גדולה', price: 16, image: 'https://images.unsplash.com/photo-1570968915860-54d5c301fc9f?auto=format&fit=crop&w=600&q=80' },
-      { id: 3, cat: 'coffee', name: 'אמריקנו', desc: 'מנת אספרסו עם מים חמים או קרח', price: 13, image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=600&q=80' },
-      { id: 4, cat: 'coffee', name: 'קולד ברו (חליטה קרה)', desc: 'מיצוי קפה קר איטי במשך 18 שעות, עדין ומעורר', price: 18, image: 'https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=600&q=80' },
-      { id: 5, cat: 'coffee', name: 'מאצ׳ה לאטה', desc: 'אבקת מאצ׳ה יפנית טהורה עם חלב חם או מוקצף קר', price: 19, image: 'https://images.unsplash.com/photo-1536256263959-770b48d82b0a?auto=format&fit=crop&w=600&q=80' },
-      { id: 6, cat: 'bakery', name: 'קרואסון חמאה שקדים', desc: 'קרואסון פריך ממולא קרם שקדים עשיר ושבבים קלויים', price: 21, image: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=600&q=80' },
-      { id: 7, cat: 'bakery', name: 'עוגת בבקה שוקולד', desc: 'שמרים רכים במילוי שוקולד מובחר', price: 18, image: 'https://images.unsplash.com/photo-1607958996333-41aef7caefaa?auto=format&fit=crop&w=600&q=80' },
-      { id: 8, cat: 'bakery', name: 'עוגת גבינה בסקית', desc: 'נימוחה ואפויה בטמפרטורה גבוהה עם מעטה שחום', price: 28, image: 'https://images.unsplash.com/photo-1524351199679-46cddf530c04?auto=format&fit=crop&w=600&q=80' },
-      { id: 9, cat: 'sandwiches', name: 'קרואסון סלמון מעושן', desc: 'סלמון נורווגי, גבינת שמנת, צלפים, מלפפון ושמיר', price: 34, image: 'https://images.unsplash.com/photo-1509722747041-616f39b57569?auto=format&fit=crop&w=600&q=80' },
-      { id: 10, cat: 'sandwiches', name: 'טוסט גאודה ופסטו', desc: 'לחם מחמצת כפרי, גאודה הולנדית, עגבניה מיובשת ופסטו בזיליקום', price: 32, image: 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=600&q=80' },
-      { id: 11, cat: 'sandwiches', name: 'כריך אבוקדו וביצה', desc: 'מחית אבוקדו מתובלת, ביצה רכה, צנונית ונבטים', price: 31, image: 'https://images.gastronom.ru/ik4SR0CbBjdMQGO9GPDQJXVwsXj2fjtwjEJtDFa3Nug/pr:recipe-cover-image/g:ce/rs:auto:0:0:0/L2Ntcy9hbGwtaW1hZ2VzLzk0NTk2MzhkLTUzMTMtNDk3NS05Mzk3LTViMTIwMzY0MjRiMS5qcGc.webp' }
+      {
+        id: 1, cat: 'coffee', price: 14,
+        image: 'https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=600&q=80',
+        names: {
+          he: 'קפוצ׳ינו / הפוך קטן',
+          en: 'Cappuccino (Small)',
+          ru: 'Капучино (маленький)',
+          uk: 'Капучино (маленький)'
+        },
+        descs: {
+          he: 'אספרסו כפול עם חלב מוקצף (אפשרות לשיבולת שועל / סויה)',
+          en: 'Double espresso with silky steamed milk (oat/soy option available)',
+          ru: 'Двойной эспрессо со взбитым молоком (есть овсяное и соевое)',
+          uk: 'Подвійний еспресо зі збитим молоком (є вівсяне та соєве)'
+        }
+      },
+      {
+        id: 2, cat: 'coffee', price: 16,
+        image: 'https://images.unsplash.com/photo-1570968915860-54d5c301fc9f?auto=format&fit=crop&w=600&q=80',
+        names: {
+          he: 'קפוצ׳ינו / הפוך גדול',
+          en: 'Cappuccino (Large)',
+          ru: 'Капучино (большой)',
+          uk: 'Капучино (великий)'
+        },
+        descs: {
+          he: 'קפה קטיפתי ועשיר בכוס גדולה',
+          en: 'Velvety and rich coffee in a large cup',
+          ru: 'Бархатистый насыщенный кофе в большой чашке',
+          uk: 'Оксамитова насичена кава у великій чашці'
+        }
+      },
+      {
+        id: 3, cat: 'coffee', price: 13,
+        image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=600&q=80',
+        names: {
+          he: 'אמריקנו',
+          en: 'Americano',
+          ru: 'Американо',
+          uk: 'Американо'
+        },
+        descs: {
+          he: 'מנת אספרסו כפול עם מים חמים או קרח',
+          en: 'Double espresso with hot water or poured over ice',
+          ru: 'Двойной эспрессо с горячей водой или со льдом',
+          uk: 'Подвійний еспресо з гарячою водою або з льодом'
+        }
+      },
+      {
+        id: 4, cat: 'coffee', price: 18,
+        image: 'https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=600&q=80',
+        names: {
+          he: 'קולד ברו (חליטה קרה)',
+          en: 'Cold Brew Coffee',
+          ru: 'Колд Брю (холодный кофе)',
+          uk: 'Колд Брю (холодна кава)'
+        },
+        descs: {
+          he: 'מיצוי איטי במשך 18 שעות, עדין ומעורר',
+          en: '18-hour slow steeped specialty coffee, smooth & energizing',
+          ru: 'Холодное медленное настаивание 18 часов. Мягкий и бодрящий',
+          uk: 'Холодне повільне настоювання 18 годин. М’який та підбадьорливий'
+        }
+      },
+      {
+        id: 5, cat: 'coffee', price: 19,
+        image: 'https://images.unsplash.com/photo-1536256263959-770b48d82b0a?auto=format&fit=crop&w=600&q=80',
+        names: {
+          he: 'מאצ׳ה לאטה',
+          en: 'Matcha Latte',
+          ru: 'Матча латте',
+          uk: 'Матча лате'
+        },
+        descs: {
+          he: 'מאצ׳ה יפנית טהורה עם חלב חם או קר',
+          en: 'Ceremonial Japanese matcha with steamed or iced milk',
+          ru: 'Японский чай матча с теплым или холодным молоком',
+          uk: 'Японський чай матча з теплим або холодним молоком'
+        }
+      },
+      {
+        id: 6, cat: 'bakery', price: 21,
+        image: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=600&q=80',
+        names: {
+          he: 'קרואסון חמאה שקדים',
+          en: 'Almond Butter Croissant',
+          ru: 'Миндальный круассан',
+          uk: 'Мигдалевий круасан'
+        },
+        descs: {
+          he: 'קרואסון פריך במילוי קרם שקדים עשיר ושבבים קלויים',
+          en: 'Flaky butter croissant filled with rich almond frangipane',
+          ru: 'Слоеный круассан с миндальным кремом и лепестками миндаля',
+          uk: 'Листковий круасан з ніжним мигдалевим кремом та пелюстками'
+        }
+      },
+      {
+        id: 7, cat: 'bakery', price: 18,
+        image: 'https://images.unsplash.com/photo-1607958996333-41aef7caefaa?auto=format&fit=crop&w=600&q=80',
+        names: {
+          he: 'עוגת בבקה שוקולד',
+          en: 'Chocolate Babka Slice',
+          ru: 'Бабка с шоколадом',
+          uk: 'Бабка з шоколадом'
+        },
+        descs: {
+          he: 'בצק שמרים רך במילוי שכבות שוקולד מובחר',
+          en: 'Braided sweet brioche dough swirled with dark Belgian chocolate',
+          ru: 'Нежное дрожжевое тесто с прослойками темного шоколада',
+          uk: 'Ніжне дріжджове тісто з прошарками темного шоколаду'
+        }
+      },
+      {
+        id: 8, cat: 'bakery', price: 28,
+        image: 'https://images.unsplash.com/photo-1524351199679-46cddf530c04?auto=format&fit=crop&w=600&q=80',
+        names: {
+          he: 'עוגת גבינה בסקית',
+          en: 'Basque Burnt Cheesecake',
+          ru: 'Баскский чизкейк',
+          uk: 'Баскський чизкейк'
+        },
+        descs: {
+          he: 'קרמית ונימוחה עם מעטה מקורמל שחום',
+          en: 'Creamy, melt-in-the-mouth texture with a caramelized crust',
+          ru: 'Кремовый, тающий во рту чизкейк с карамельной корочкой',
+          uk: 'Кремовий, ніжний чизкейк із карамельною скоринкою'
+        }
+      },
+      {
+        id: 9, cat: 'sandwiches', price: 34,
+        image: 'https://images.unsplash.com/photo-1509722747041-616f39b57569?auto=format&fit=crop&w=600&q=80',
+        names: {
+          he: 'קרואסון סלמון מעושן',
+          en: 'Smoked Salmon Croissant',
+          ru: 'Круассан с лососем',
+          uk: 'Круасан з лососем'
+        },
+        descs: {
+          he: 'סלמון מעושן, גבינת שמנת, צלפים, מלפפון ושמיר',
+          en: 'Smoked salmon, cream cheese, capers, cucumber, fresh dill',
+          ru: 'Копченый лосось, крем-сыр, каперсы, огурец и свежий укроп',
+          uk: 'Копчений лосось, крем-сир, каперси, огірок та свіжий кріп'
+        }
+      },
+      {
+        id: 10, cat: 'sandwiches', price: 32,
+        image: 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=600&q=80',
+        names: {
+          he: 'טוסט גאודה ופסטו',
+          en: 'Gouda & Pesto Toast',
+          ru: 'Тост с сыром гауда и песто',
+          uk: 'Тост з гаудою та песто'
+        },
+        descs: {
+          he: 'לחם מחמצת, גאודה הולנדית, עגבניה מיובשת ופסטו בזיליקום',
+          en: 'Artisan sourdough, aged gouda, sun-dried tomatoes & pesto',
+          ru: 'Хлеб на закваске, выдержанная гауда, вяленые томаты и базиликовый песто',
+          uk: 'Хліб на заквасці, витримана гауда, в’ялені томати та базиліковий песто'
+        }
+      },
+      {
+        id: 11, cat: 'sandwiches', price: 31,
+        image: 'https://images.gastronom.ru/ik4SR0CbBjdMQGO9GPDQJXVwsXj2fjtwjEJtDFa3Nug/pr:recipe-cover-image/g:ce/rs:auto:0:0:0/L2Ntcy9hbGwtaW1hZ2VzLzk0NTk2MzhkLTUzMTMtNDk3NS05Mzk3LTViMTIwMzY0MjRiMS5qcGc.webp',
+        names: {
+          he: 'כריך אבוקדו וביצה',
+          en: 'Avocado & Egg Toast',
+          ru: 'Тост с авокадо и яйцом',
+          uk: 'Тост з авокадо та яйцем'
+        },
+        descs: {
+          he: 'אבוקדו טרי מתובל, ביצה רכה, צנונית ונבטים',
+          en: 'Fresh seasoned avocado mash, soft boiled egg, radish & microgreens',
+          ru: 'Спелый авокадо со специями, яйцо всмятку, редис и микрозелень',
+          uk: 'Стиглий авокадо зі спеціями, яйце некруто, редиска та мікрозелень'
+        }
+      }
     ];
 
+    let currentLang = localStorage.getItem('site_lang') || 'he';
+    let currentCategory = 'all';
     let cart = {};
-    let orderType = 'איסוף עצמי';
+    let orderType = 'pickup';
 
-    // Рендер каталога
-    function renderMenu(items) {
+    function changeLanguage(lang) {
+      currentLang = lang;
+      localStorage.setItem('site_lang', lang);
+      document.getElementById('lang-select').value = lang;
+
+      const t = i18n[lang];
+      document.documentElement.lang = lang;
+      document.documentElement.dir = t.dir;
+
+      // Текстовые блоки
+      document.getElementById('page-title').innerText = t.pageTitle;
+      document.getElementById('brand-title').innerText = t.brand;
+      document.getElementById('cart-title').innerText = t.cartBtn;
+      document.getElementById('hero-title').innerText = t.heroTitle;
+      document.getElementById('hero-sub').innerText = t.heroSub;
+      document.getElementById('meta-address').innerText = t.address;
+      document.getElementById('meta-hours').innerText = t.hours;
+      document.getElementById('meta-status').innerText = t.status;
+      document.getElementById('drawer-title').innerText = t.drawerTitle;
+      document.getElementById('btn-pickup').innerText = t.pickup;
+      document.getElementById('btn-delivery').innerText = t.delivery;
+      document.getElementById('lbl-name').innerText = t.name;
+      document.getElementById('cust-name').placeholder = t.namePlh;
+      document.getElementById('lbl-phone').innerText = t.phone;
+      document.getElementById('lbl-address').innerText = t.addressLbl;
+      document.getElementById('cust-address').placeholder = t.addressPlh;
+      document.getElementById('lbl-notes').innerText = t.notes;
+      document.getElementById('cust-notes').placeholder = t.notesPlh;
+      document.getElementById('lbl-total').innerText = t.total;
+      document.getElementById('btn-send-whatsapp').innerText = t.sendWA;
+      document.getElementById('float-action').innerText = t.viewOrder;
+
+      renderCategories();
+      renderMenu();
+      updateCartUI();
+    }
+
+    function renderCategories() {
+      const t = i18n[currentLang];
+      const categories = [
+        { key: 'all', label: t.all },
+        { key: 'coffee', label: t.coffee },
+        { key: 'bakery', label: t.bakery },
+        { key: 'sandwiches', label: t.sandwiches }
+      ];
+
+      const catContainer = document.getElementById('cat-container');
+      catContainer.innerHTML = categories.map(c => `
+        <button class="cat-pill ${c.key === currentCategory ? 'active' : ''}" onclick="setCategory('${c.key}')">
+          ${c.label}
+        </button>
+      `).join('');
+    }
+
+    function setCategory(cat) {
+      currentCategory = cat;
+      renderCategories();
+      renderMenu();
+    }
+
+    function renderMenu() {
+      const t = i18n[currentLang];
       const container = document.getElementById('menu-container');
-      container.innerHTML = items.map(item => `
+      const filtered = (currentCategory === 'all') 
+        ? menuItems 
+        : menuItems.filter(i => i.cat === currentCategory);
+
+      container.innerHTML = filtered.map(item => `
         <div class="card">
           <div class="card-img-container">
-            <img class="card-img" src="${item.image}" alt="${item.name}" loading="lazy">
+            <img class="card-img" src="${item.image}" alt="${item.names[currentLang]}" loading="lazy">
           </div>
           <div class="card-content">
-            <h3 class="card-title">${item.name}</h3>
-            <p class="card-desc">${item.desc}</p>
+            <h3 class="card-title">${item.names[currentLang]}</h3>
+            <p class="card-desc">${item.descs[currentLang]}</p>
             <div class="card-footer">
               <span class="price">${item.price} ₪</span>
-              <button class="add-btn" onclick="addToCart(${item.id})">+ הוספה לסל</button>
+              <button class="add-btn" onclick="addToCart(${item.id})">${t.addBtn}</button>
             </div>
           </div>
         </div>
       `).join('');
     }
 
-    // Фильтрация
-    function filterCat(cat) {
-      document.querySelectorAll('.cat-pill').forEach(btn => btn.classList.remove('active'));
-      event.target.classList.add('active');
-      if (cat === 'all') {
-        renderMenu(menuItems);
-      } else {
-        renderMenu(menuItems.filter(i => i.cat === cat));
-      }
-    }
-
-    // Управление корзиной
     function addToCart(id) {
       cart[id] = (cart[id] || 0) + 1;
       updateCartUI();
@@ -559,10 +988,10 @@
     }
 
     function updateCartUI() {
+      const t = i18n[currentLang];
       const count = Object.values(cart).reduce((a, b) => a + b, 0);
       document.getElementById('cart-count').innerText = count;
 
-      // Мобильная плашка
       const floatingBar = document.getElementById('floating-cart');
       if (count > 0 && window.innerWidth <= 768) {
         floatingBar.style.display = 'flex';
@@ -570,12 +999,11 @@
         floatingBar.style.display = 'none';
       }
 
-      // Генерация списка позиций
       const list = document.getElementById('cart-items-list');
       const checkoutBlock = document.getElementById('checkout-block');
 
       if (count === 0) {
-        list.innerHTML = '<p style="text-align: center; color: var(--text-muted); margin-top: 2rem;">הסל עדיין ריק. הוסיפו משהו טעים מהתפריט :)</p>';
+        list.innerHTML = `<p style="text-align: center; color: var(--text-muted); margin-top: 2rem;">${t.emptyCart}</p>`;
         checkoutBlock.style.display = 'none';
         return;
       }
@@ -592,7 +1020,7 @@
         html += `
           <div class="cart-item">
             <div>
-              <div style="font-weight: 700;">${item.name}</div>
+              <div style="font-weight: 700;">${item.names[currentLang]}</div>
               <div style="color: var(--text-muted); font-size: 0.85rem;">${item.price} ₪ × ${cart[id]} = ${itemTotal} ₪</div>
             </div>
             <div class="qty-controls">
@@ -606,66 +1034,67 @@
 
       list.innerHTML = html;
       document.getElementById('final-total').innerText = `${total} ₪`;
-      document.getElementById('float-count').innerText = `${count} פריטים`;
+      document.getElementById('float-count').innerText = `${count} ${t.itemsWord}`;
       document.getElementById('float-total').innerText = `${total} ₪`;
     }
 
-    // Переключение типа заказа
     function setOrderType(type) {
       orderType = type;
-      document.getElementById('btn-pickup').classList.toggle('active', type === 'איסוף עצמי');
-      document.getElementById('btn-delivery').classList.toggle('active', type === 'משלוח');
-      document.getElementById('address-field').style.display = (type === 'משלוח') ? 'block' : 'none';
+      document.getElementById('btn-pickup').classList.toggle('active', type === 'pickup');
+      document.getElementById('btn-delivery').classList.toggle('active', type === 'delivery');
+      document.getElementById('address-field').style.display = (type === 'delivery') ? 'block' : 'none';
     }
 
-    // Открытие/закрытие панели
     function toggleCart() {
       document.getElementById('cart-overlay').classList.toggle('open');
     }
+
     function handleOverlayClick(e) {
       if (e.target.id === 'cart-overlay') toggleCart();
     }
 
-    // Оформление в WhatsApp
     function submitToWhatsApp() {
+      const t = i18n[currentLang];
       const name = document.getElementById('cust-name').value.trim();
       const phone = document.getElementById('cust-phone').value.trim();
       const address = document.getElementById('cust-address').value.trim();
       const notes = document.getElementById('cust-notes').value.trim();
 
       if (!name || !phone) {
-        alert('נא למלא שם ומספר טלפון ליצירת קשר');
+        alert(t.alertContact);
         return;
       }
-      if (orderType === 'משלוח' && !address) {
-        alert('נא להזין כתובת מלאה למשלוח');
+      if (orderType === 'delivery' && !address) {
+        alert(t.alertAddress);
         return;
       }
 
-      let text = `☕ *הזמנה חדשה - קפה ולב*\n`;
-      text += `👤 *שם:* ${name}\n`;
-      text += `📞 *טלפון:* ${phone}\n`;
-      text += `📦 *סוג הזמנה:* ${orderType}\n`;
-      if (orderType === 'משלוח') text += `📍 *כתובת:* ${address}\n`;
-      if (notes) text += `📝 *הערות:* ${notes}\n`;
-      text += `\n*פירוט הפריטים:*\n`;
+      const orderTypeText = (orderType === 'pickup') ? t.pickup : t.delivery;
+
+      let text = `${t.waHeader}\n`;
+      text += `${t.waName} ${name}\n`;
+      text += `${t.waPhone} ${phone}\n`;
+      text += `${t.waType} ${orderTypeText}\n`;
+      if (orderType === 'delivery') text += `${t.waAddress} ${address}\n`;
+      if (notes) text += `${t.waNotes} ${notes}\n`;
+      text += `\n${t.waDetails}\n`;
 
       let total = 0;
       for (let id in cart) {
         const item = menuItems.find(i => i.id == id);
-        text += `• ${item.name} × ${cart[id]} (${item.price * cart[id]} ₪)\n`;
+        text += `• ${item.names[currentLang]} × ${cart[id]} (${item.price * cart[id]} ₪)\n`;
         total += item.price * cart[id];
       }
-      text += `\n💰 *סה״כ לתשלום: ${total} ₪*`;
+      text += `\n${t.waTotal} ${total} ₪`;
 
-      // При необходимости укажите номер телефона кофейни вместо 972500000000
+      // При необходимости укажите реальный номер WhatsApp (например, "972501234567")
       const phoneTo = "972500000000"; 
       const url = `https://wa.me/${phoneTo}?text=${encodeURIComponent(text)}`;
       window.open(url, '_blank');
     }
 
-    // Первичная инициализация
-    renderMenu(menuItems);
+    // Инициализация при загрузке
+    changeLanguage(currentLang);
   </script>
 </body>
 </html>
